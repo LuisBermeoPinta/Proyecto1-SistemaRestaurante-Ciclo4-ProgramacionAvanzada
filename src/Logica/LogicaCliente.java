@@ -71,4 +71,22 @@ public class LogicaCliente {
         
     }
     
+    public ArrayList<Cliente> ExtraerLogicaClientes() throws ClassNotFoundException, SQLException{
+        ArrayList<Cliente> lista_Clientes = new ArrayList<>();        
+        ResultSet rs = objBDCliente.ExtraerClientes();
+        int id = 0;
+        String nombre;
+        String cedula;
+        
+        if(rs.next()){
+            id = rs.getInt("id_Cliente");
+            nombre = rs.getString("nombre");
+            cedula = rs.getString("Cedula");
+            Cliente objCliente = new Cliente(id, nombre, cedula);
+            lista_Clientes.add(objCliente);
+        }
+        return lista_Clientes;
+
+    } 
+    
 }

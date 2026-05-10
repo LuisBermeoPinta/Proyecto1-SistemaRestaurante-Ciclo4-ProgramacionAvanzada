@@ -48,4 +48,28 @@ public class BDProducto {
         ps.close();
         return listaProductos;    
     }
+    
+    public int InsertarProductoPedido(ArrayList<Integer> cantidades, int cod_Pedido, int id_Producto) throws ClassNotFoundException, SQLException{
+        int resultado = 0;
+        for(int i = 0; i < cantidades.size(); i ++){
+             String sentencia = "Insert into producto_pedido (cod_Pedido, id_Producto, cantidad)"
+                    + "values (?, ?, ?)";
+            PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+            ps.setInt(1, cod_Pedido);
+            ps.setInt(2, id_Producto);
+            ps.setInt(3,  cantidades.get(i));    
+            resultado += ps.executeUpdate();
+            
+        }
+        return resultado;
+    }
+        
+    
+    public ResultSet ExtraerIdentificador(Producto objProducto) throws ClassNotFoundException, SQLException{
+        String sentencia = "select id_Producto from Producto where nombre = ?";
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        ps.setString(1, objProducto.getNombre());
+
+        return ps.executeQuery();
+    }        
 }

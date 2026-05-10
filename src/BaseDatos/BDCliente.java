@@ -32,6 +32,13 @@ public class BDCliente {
        return ps.executeUpdate();
     } 
     
+    public ResultSet ExtraerClientes() throws ClassNotFoundException, SQLException{
+        String sentencia = "select * from cliente";
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        return ps.executeQuery();
+    }  
+    
+    
     public int InsertarDireccion(ArrayList<Direccion> direcciones, int id_Cliente) throws ClassNotFoundException, SQLException{
         int resultado = 0;
         for(Direccion dir : direcciones){

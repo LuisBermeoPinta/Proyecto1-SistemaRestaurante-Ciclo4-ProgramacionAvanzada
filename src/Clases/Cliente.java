@@ -16,28 +16,21 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String nombre, String cedula, ArrayList<Direccion> direccion, ArrayList<Telefono> telefono, ArrayList<Pedido> pedidos) {
+    public Cliente(int id_Cliente, String nombre, String cedula) {
+        this.id_Cliente = id_Cliente;
         this.nombre = nombre;
         this.cedula = cedula;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.pedidos = pedidos;
     }
     
+    
 
-    public Cliente(int id_Cliente, String nombre) {
-        this.id_Cliente = id_Cliente;
-        this.nombre = nombre;
-    }
-
-    public Cliente(int id_Cliente, String nombre, String cedula, ArrayList<Direccion> direccion, ArrayList<Telefono> telefono, ArrayList<Pedido> pedidos) {
-        this.id_Cliente = id_Cliente;
+    public Cliente(String nombre, String cedula, ArrayList<Direccion> direccion, ArrayList<Telefono> telefono) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.pedidos = pedidos;
     }
+    
 
     public int getId_Cliente() {
         return id_Cliente;

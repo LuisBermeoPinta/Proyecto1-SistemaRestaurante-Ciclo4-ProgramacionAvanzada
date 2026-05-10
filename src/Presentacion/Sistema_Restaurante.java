@@ -3,6 +3,7 @@ package Presentacion;
 
 import Clases.*;
 import Logica.LogicaCliente;
+import Logica.LogicaPedido;
 import Logica.LogicaProducto;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Sistema_Restaurante {
     static Scanner sc = new Scanner(System.in);
     static LogicaCliente objLogicaCliente = new LogicaCliente();
     static LogicaProducto objLogicaProducto = new LogicaProducto();
+    static LogicaPedido objLogicaPedido = new LogicaPedido();
         
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Sistema_Restaurante app = new Sistema_Restaurante();
@@ -29,9 +31,10 @@ public class Sistema_Restaurante {
         objProductos.add(new Producto("Pizza", 4.00));
         objProductos.add(new Producto("Alitas BBQ", 3.00));
         
-        for(Producto prod: objProductos){
+        /*for(Producto prod: objProductos){
             objLogicaProducto.InsertarLogicaProducto(prod);
         }
+*/
         
        
         
@@ -46,12 +49,10 @@ public class Sistema_Restaurante {
         objTelefono.add(new Telefono(1, "Casa", "1234567890"));    
         
         //Creacion del Objeto Pedido
-        ArrayList<Pedido> objPedidos = new ArrayList<>();
-        objPedidos.add(new Pedido("En Curso", 12.0, "Mi Casa", "Viernes 29 de Junio a las 12:30", objProductos));
         
         
         //Creacion del Objeto Cliente
-        Cliente objCliente = new Cliente("Luis", "1105606659", objDireccion, objTelefono, objPedidos);
+        Cliente objCliente = new Cliente("Luis", "1105606659", objDireccion, objTelefono);
     
         
         
@@ -68,10 +69,20 @@ public class Sistema_Restaurante {
         
         switch(opcion){
             case 1:
+                ArrayList<Cliente> lista_Cliente = objLogicaCliente.ExtraerLogicaClientes();
+                for(){
+                    
+                }
                 if(objLogicaCliente.InsertarLogicaCliente(objCliente)){
                     System.out.println("Cliente registrado con Exito!\n");
-                    app.MostrarMenu();                
-                
+                    ArrayList<Pedido> objPedidos = new ArrayList<>();
+                    objPedidos.add(new Pedido("En Curso", "Mi Casa"));                    
+                    if(objLogicaPedido.InsertarLogicaPedido(objPedidos.get(0))){
+                        System.out.println("Pedido insertado con Exito!\n");
+                        app.MostrarMenu(objPedidos);                      
+                    }else{
+                        System.out.println("No se puede registrar el pedido");
+                    }              
                 
                 }else{
                     System.out.println("No se puedo registrar al Cliente");
@@ -92,19 +103,36 @@ public class Sistema_Restaurante {
         
         
     }
-    public void MostrarMenu() throws ClassNotFoundException, SQLException{
+    public void MostrarMenu(ArrayList<Pedido> objPedidos) throws ClassNotFoundException, SQLException{
         ArrayList<Producto> listaProductos = objLogicaProducto.ExtraerLogicaProducto();
-        System.out.println("Productos Disponibles");
-        System.out.println("Indentificador " + "Nombre        " + "Precio       ");
-        for(Producto prod: listaProductos){
-            System.out.println(prod.getId_Producto() + ") " + prod.getNombre() + "        " + prod.getPrecio());  
-        }
-        System.out.println("0 " + "Salir");
-        System.out.print("Ingrese su Eleccion: ");
-        byte eleccion = sc.nextByte();
-        ArrayList<Producto> prod_Elegidos = new ArrayList<>();
-        prod_Elegidos.get(eleccion);
-        
+        byte eleccion = 0;
+        int cantidad = 0;
+        do{
+            System.out.println("Productos Disponibles");
+            System.out.println("Indentificador " + "Nombre        " + "Precio       ");
+            for(Producto prod: listaProductos){
+                System.out.println("           " + prod.getId_Producto() + ") " + prod.getNombre() + "        " + prod.getPrecio());  
+            }
+            System.out.println("0 " + "Salir");
+            System.out.print("Ingrese su Eleccion: ");
+            eleccion = sc.nextByte();
+            if(eleccion != 0){
+                System.out.println("Ingrese la Cantidad que desea: ");
+                cantidad = sc.nextInt();
+            }
+
+            ArrayList<Producto> prod_Elegidos = new ArrayList<>();
+            prod_Elegidos.get(eleccion - 1);
+            ArrayList<Integer> cantidades = new ArrayList<>();
+            cantidades.add(cantidad);
+
+            for(Pedido ped: objPedidos){
+                for(Producto prodEleg: prod_Elegidos){
+                    objLogicaProducto.InsertarLogicaPedidoProducto(ped, prodEleg, cantidades);            
+
+                }
+            }
+        }while(eleccion != 0);
     }
 }
 

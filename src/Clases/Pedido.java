@@ -14,6 +14,12 @@ public class Pedido {
     public Pedido() {
     }
 
+    public Pedido(String estado, String direccion_Entrega) {
+        this.estado = estado;
+        this.direccion_Entrega = direccion_Entrega;
+    }
+    
+
     public Pedido(String estado, double total, String direccion_Entrega, String fecha_Hora_Entrega, ArrayList<Producto> productos) {
         this.estado = estado;
         this.total = total;
