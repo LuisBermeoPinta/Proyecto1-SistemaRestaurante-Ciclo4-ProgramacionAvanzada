@@ -16,6 +16,12 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(String nombre, String cedula) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+    }
+    
+
     public Cliente(int id_Cliente, String nombre, String cedula) {
         this.id_Cliente = id_Cliente;
         this.nombre = nombre;

@@ -14,6 +14,11 @@ public class Pedido {
     public Pedido() {
     }
 
+    public Pedido(String estado) {
+        this.estado = estado;
+    }
+    
+
     public Pedido(String estado, String direccion_Entrega) {
         this.estado = estado;
         this.direccion_Entrega = direccion_Entrega;

@@ -3,10 +3,14 @@ package Clases;
 
 
 public class Direccion {
-        private int id_Direccion;
-        private String calle1;
-        private String calle2;
+  
+    private int id_Direccion;
+    private String calle1;
+    private String calle2;
 
+    public Direccion() {
+    }
+    
     public Direccion(int id_Direccion, String calle1, String calle2) {
         this.id_Direccion = id_Direccion;
         this.calle1 = calle1;

@@ -39,18 +39,16 @@ public class BDCliente {
     }  
     
     
-    public int InsertarDireccion(ArrayList<Direccion> direcciones, int id_Cliente) throws ClassNotFoundException, SQLException{
+    public int InsertarDireccion(Direccion direccion, int id_Cliente) throws ClassNotFoundException, SQLException{
         int resultado = 0;
-        for(Direccion dir : direcciones){
-             String sentencia = "Insert into Direccion (id_Cliente, calle1, calle2)"
-                    + "values (?, ?, ?)";
-            PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
-            ps.setInt(1, id_Cliente);
-            ps.setString(2, dir.getCalle1());
-            ps.setString(3,  dir.getCalle2());    
-            resultado += ps.executeUpdate();
-            
-        }
+        String sentencia = "Insert into Direccion (id_Cliente, calle1, calle2)"
+                + "values (?, ?, ?)";    
+        
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        ps.setInt(1, id_Cliente);
+        ps.setString(2, direccion.getCalle1());
+        ps.setString(3,  direccion.getCalle2());    
+        resultado += ps.executeUpdate();
         return resultado;
     }
     
@@ -61,7 +59,7 @@ public class BDCliente {
                     + "values(?, ?, ?)";
             PreparedStatement ps = con.getConnection().prepareStatement(Sentencia);
             ps.setInt(1, id_Cliente);
-            ps.setString(2, telf.getTipo());
+            ps.setString(2, telf.getNombre());
             ps.setString(3, telf.getNum_Telefono());
             resultado += ps.executeUpdate();
             

@@ -5,17 +5,20 @@ package Clases;
 public class Telefono {
     
     private int id_Telefono;
-    private String tipo;
+    private String nombre;
     private String num_Telefono;
 
-    public Telefono(int id_Telefono, String tipo, String num_Telefono) {
+    public Telefono() {
+    }
+
+    public Telefono(int id_Telefono, String nombre, String num_Telefono) {
         this.id_Telefono = id_Telefono;
-        this.tipo = tipo;
+        this.nombre = nombre;
         this.num_Telefono = num_Telefono;
     }
 
-    public Telefono(String tipo, String num_Telefono) {
-        this.tipo = tipo;
+    public Telefono(String nombre, String num_Telefono) {
+        this.nombre = nombre;
         this.num_Telefono = num_Telefono;
     }
 
@@ -27,12 +30,12 @@ public class Telefono {
         this.id_Telefono = id_Telefono;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNum_Telefono() {
