@@ -41,7 +41,7 @@ public class Sistema_Restaurante {
         
         
         //Creacion del Objeto Direccion
-        ArrayList<Direccion> objDireccion = new ArrayList<>();
+        /*ArrayList<Direccion> objDireccion = new ArrayList<>();
         objDireccion.add(new Direccion(1, "Paris", "Paltas"));
         
         //Creacion del Objeto Telefomo
@@ -53,6 +53,7 @@ public class Sistema_Restaurante {
         
         //Creacion del Objeto Cliente
         Cliente objCliente = new Cliente("Luis", "1105606659", objDireccion, objTelefono);
+        */
     
         
         
@@ -69,14 +70,64 @@ public class Sistema_Restaurante {
         
         switch(opcion){
             case 1:
+                ArrayList<Direccion> direcciones = new ArrayList<>();  
+                ArrayList<Telefono> telefonos = new ArrayList<>();
+                String calle1;
+                String calle2;
+                String tipo;
+                String numTelf;
+                
+                System.out.print("Datos del Cliente");
+                System.out.print("Nombre: ");
+                String nombre = sc.nextLine();
+                System.out.print("Cedula: ");
+                String cedula = sc.nextLine();
+                do{
+                    System.out.println("Direccion: ");
+                    System.out.println("Calle 1: ");
+                    calle1 = sc.nextLine();
+                    System.out.println("Calle 2: ");
+                    calle2 = sc.nextLine();
+                    System.out.println("Presiona 0 para Salir: ");
+                    Direccion objDireccion = new Direccion(calle1, calle2);
+                    direcciones.add(objDireccion);
+                }while(sc.nextInt() != 0);                
+                
+                do{
+                    System.out.println("Telefono: ");
+                    System.out.println("Nombre: ");
+                    tipo = sc.nextLine();
+                    System.out.println("Numero de Telefono: ");
+                    numTelf = sc.nextLine();
+                    System.out.println("Presiona 0 para Salir: ");
+                    Telefono objTelefono = new Telefono(tipo, numTelf);
+                    telefonos.add(objTelefono);            
+                }while(sc.nextInt() != 0);  
+                
+                Cliente objCliente = new Cliente(nombre, cedula, direcciones, telefonos);
+                objLogicaCliente.InsertarLogicaCliente(objCliente);
+                
+                app.MostrarMenu(objPedidos);
+                
+                
+                /*int elecccionCliente = 0;
                 ArrayList<Cliente> lista_Cliente = objLogicaCliente.ExtraerLogicaClientes();
-                for(){
-                    
+                System.out.println("Identificador          Nombre                   Cedula");
+                for(Cliente client: lista_Cliente){
+                    System.out.println("       " + client.getId_Cliente() + client.getNombre() + client.getCedula());
                 }
-                if(objLogicaCliente.InsertarLogicaCliente(objCliente)){
+                System.out.println("Selecione el Cliente: ");
+                elecccionCliente = sc.nextInt();*/
+                objLogicaCliente.InsertarLogicaDireccion(objCliente, objDireccion)
+                
+                app.MostrarMenu();                  
+                
+                //objLogicaCliente.InsertarLogicaCliente(objCliente)
+                if(true){
                     System.out.println("Cliente registrado con Exito!\n");
                     ArrayList<Pedido> objPedidos = new ArrayList<>();
-                    objPedidos.add(new Pedido("En Curso", "Mi Casa"));                    
+                    objPedidos.add(new Pedido("En Curso", "Mi Casa"));   
+                    
                     if(objLogicaPedido.InsertarLogicaPedido(objPedidos.get(0))){
                         System.out.println("Pedido insertado con Exito!\n");
                         app.MostrarMenu(objPedidos);                      
@@ -103,8 +154,12 @@ public class Sistema_Restaurante {
         
         
     }
-    public void MostrarMenu(ArrayList<Pedido> objPedidos) throws ClassNotFoundException, SQLException{
+    public void MostrarMenu() throws ClassNotFoundException, SQLException{
+        ArrayList<Pedido> objPedidos = new ArrayList<>();
+        
+        //La lista de productos extraida de la base de datos
         ArrayList<Producto> listaProductos = objLogicaProducto.ExtraerLogicaProducto();
+        ArrayList<Producto> prod_Elegidos = new ArrayList<>();
         byte eleccion = 0;
         int cantidad = 0;
         do{
@@ -116,12 +171,14 @@ public class Sistema_Restaurante {
             System.out.println("0 " + "Salir");
             System.out.print("Ingrese su Eleccion: ");
             eleccion = sc.nextByte();
+            System.out.println("Ingrese la Cantidad que desea: ");
+            cantidad = sc.nextInt();      
+            
+            
+            
             if(eleccion != 0){
-                System.out.println("Ingrese la Cantidad que desea: ");
-                cantidad = sc.nextInt();
             }
 
-            ArrayList<Producto> prod_Elegidos = new ArrayList<>();
             prod_Elegidos.get(eleccion - 1);
             ArrayList<Integer> cantidades = new ArrayList<>();
             cantidades.add(cantidad);

@@ -9,8 +9,8 @@ public class Cliente {
     private int id_Cliente;
     private String nombre;
     private String cedula;
-    private ArrayList<Direccion> direccion;
-    private ArrayList<Telefono> telefono;
+    private ArrayList<Direccion> direcciones;
+    private ArrayList<Telefono> telefonos;
     private ArrayList<Pedido> pedidos;
 
     public Cliente() {
@@ -27,9 +27,11 @@ public class Cliente {
     public Cliente(String nombre, String cedula, ArrayList<Direccion> direccion, ArrayList<Telefono> telefono) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.direccion = direccion;
-        this.telefono = telefono;
+        this.direcciones = direccion;
+        this.telefonos = telefono;
     }
+    
+    
     
 
     public int getId_Cliente() {
@@ -56,20 +58,20 @@ public class Cliente {
         this.cedula = cedula;
     }
 
-    public ArrayList<Direccion> getDireccion() {
-        return direccion;
+    public ArrayList<Direccion> getDirecciones() {
+        return direcciones;
     }
 
-    public void setDireccion(ArrayList<Direccion> direccion) {
-        this.direccion = direccion;
+    public void setDirecciones(ArrayList<Direccion> direcciones) {
+        this.direcciones = direcciones;
     }
 
-    public ArrayList<Telefono> getTelefono() {
-        return telefono;
+    public ArrayList<Telefono> getTelefonos() {
+        return telefonos;
     }
 
-    public void setTelefono(ArrayList<Telefono> telefono) {
-        this.telefono = telefono;
+    public void setTelefonos(ArrayList<Telefono> telefonos) {
+        this.telefonos = telefonos;
     }
 
     public ArrayList<Pedido> getPedidos() {
