@@ -7,14 +7,17 @@ public class Empleado {
     private int id_Empleado;
     private String nombre;
     private String rol;
-    private ArrayList<Pedido> pedidos;
 
-    public Empleado(int id_Empleado, String nombre, String rol, ArrayList<Pedido> pedidos) {
+    public Empleado() {
+    }
+    
+
+    public Empleado(int id_Empleado, String nombre, String rol) {
         this.id_Empleado = id_Empleado;
         this.nombre = nombre;
         this.rol = rol;
-        this.pedidos = pedidos;
     }
+
 
     public Empleado(String nombre, String rol) {
         this.nombre = nombre;

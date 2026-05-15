@@ -1,18 +1,18 @@
 
 package Logica;
 
-import BaseDatos.BDPedido;
-import BaseDatos.BDProducto;
+import BaseDatos.BDPed;
+import BaseDatos.BDProd;
 import Clases.Cliente;
 import Clases.Pedido;
 import Clases.Producto;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.ResultSet;
 
 public class LogProd {
-    BDProducto objBDProducto = new BDProducto();       
-    BDPedido objBDPedido = new BDPedido();
+    BDProd objBDProducto = new BDProd();       
+    BDPed objBDPedido = new BDPed();
     
     public boolean InsertarLogicaProducto(Producto objProducto) throws ClassNotFoundException, SQLException{
         if(objBDProducto.InsertarProducto(objProducto) == 1){

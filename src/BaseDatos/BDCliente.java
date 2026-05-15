@@ -52,6 +52,12 @@ public class BDCliente {
         return resultado;
     }
     
+    public ResultSet ExtraerDireccion() throws ClassNotFoundException, SQLException{
+        String sentencia = "Select * from direccion";
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        return ps.executeQuery();
+    }
+    
     public int InsertarTelefono(ArrayList<Telefono> telefonos, int id_Cliente) throws ClassNotFoundException, SQLException{
         int resultado = 0;
         for(Telefono telf: telefonos){

@@ -1,13 +1,13 @@
 
 package Logica;
 
-import BaseDatos.BDEmpleado;
+import BaseDatos.BDEmpl;
 import Clases.Empleado;
 import java.sql.SQLException;
 
 
 public class LogEmpl {
-    BDEmpleado objBDEmpleado = new BDEmpleado();
+    BDEmpl objBDEmpleado = new BDEmpl();
     
     public boolean InsertarLogicaEmpleado(Empleado objEmpleado) throws ClassNotFoundException, SQLException{
         if(objBDEmpleado.InsertarEmpleado(objEmpleado) == 1){

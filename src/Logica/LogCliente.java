@@ -2,7 +2,7 @@
 package Logica;
 
 import BaseDatos.BDCliente;
-import BaseDatos.BDEmpleado;
+import BaseDatos.BDEmpl;
 import Clases.Cliente;
 import Clases.Direccion;
 import Clases.Empleado;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class LogCliente {
     BDCliente objBDCliente = new BDCliente();
-    BDEmpleado objBDEmpleado = new BDEmpleado();    
+    BDEmpl objBDEmpleado = new BDEmpl();    
     public boolean InsertarLogicaCliente(Cliente objCliente) throws ClassNotFoundException, SQLException{
         if(objBDCliente.InsertarCliente(objCliente) == 1){
             return true;
@@ -41,6 +41,23 @@ public class LogCliente {
         }        
         return false;
     }
+    
+    public ArrayList<Direccion> LogicaExtraerDireccion() throws ClassNotFoundException, SQLException{
+        ArrayList<Direccion> lista_direcciones = new ArrayList<>();        
+        ResultSet rs = objBDCliente.ExtraerDireccion();
+        int id = 0;
+        String calle1, calle2;
+        
+        while(rs.next()){
+            id = rs.getInt("id_Cliente");
+            calle1 = rs.getString("calle1");
+            calle2 = rs.getString("calle2");
+            Direccion objDir = new Direccion(id, calle1, calle2);
+            lista_direcciones.add(objDir);
+        }
+        return lista_direcciones;
+
+    }     
 
     public boolean InsertarLogicaTelefono(Cliente objCliente, ArrayList<Telefono> telefonos) throws ClassNotFoundException, SQLException{
         ResultSet rs = objBDCliente.ExtraerIdentificador(objCliente);
@@ -83,7 +100,7 @@ public class LogCliente {
         String nombre;
         String cedula;
         
-        if(rs.next()){
+        while(rs.next()){
             id = rs.getInt("id_Cliente");
             nombre = rs.getString("nombre");
             cedula = rs.getString("Cedula");

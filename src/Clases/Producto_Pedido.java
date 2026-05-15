@@ -3,36 +3,50 @@ package Clases;
 
 
 public class Producto_Pedido {
-    private int cod_Pedido;
-    private int id_Producto;
+    private Pedido objPed;
+    private Producto objProd;
     private int cantidad;
 
     public Producto_Pedido() {
     }
+    
 
-    public int getCod_Pedido() {
-        return cod_Pedido;
+    public Producto_Pedido(Pedido objPed, Producto objProd, int cantidad) {
+        this.objPed = objPed;
+        this.objProd = objProd;
+        this.cantidad = cantidad;
     }
 
-    public void setCod_Pedido(int cod_Pedido) {
-        this.cod_Pedido = cod_Pedido;
+
+    public Pedido getObjPed() {
+        return objPed;
     }
 
-    public int getId_Producto() {
-        return id_Producto;
+
+    public void setObjPed(Pedido objPed) {
+        this.objPed = objPed;
     }
 
-    public void setId_Producto(int id_Producto) {
-        this.id_Producto = id_Producto;
+
+    public Producto getObjProd() {
+        return objProd;
     }
+
+
+    public void setObjProd(Producto objProd) {
+        this.objProd = objProd;
+    }
+
 
     public int getCantidad() {
         return cantidad;
     }
 
+
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+    
     
     
     

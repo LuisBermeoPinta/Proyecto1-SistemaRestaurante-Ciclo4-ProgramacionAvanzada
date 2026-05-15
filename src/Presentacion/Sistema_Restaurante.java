@@ -1,35 +1,46 @@
     
 package Presentacion;
 
+import BaseDatos.BDPed;
 import Clases.*;
-import Logica.LogCliente;
-import Logica.LogPed;
-import Logica.LogProd;
+import Logica.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Sistema_Restaurante {
+    private Scanner sc;
+    private Cliente objCliente;
+    private Direccion objDir;
+    private Telefono objTelf;
+    private Pedido objPed;   
+    private Producto_Pedido objProdPed;     
+    private LogCliente objLogCliente;
+    private LogProd objLogProd;
+    private LogPed objLogPed;
+    private BDPed objBDPed;
+    
+    public Sistema_Restaurante(){
+        this.sc = new Scanner(System.in);
+        this.objCliente = new Cliente();
+        this.objDir = new Direccion();
+        this.objTelf = new Telefono();
+        this.objPed = new Pedido();   
+        this.objProdPed = new Producto_Pedido(); 
+        this.objLogCliente = new LogCliente();
+        this.objLogProd = new LogProd();
+        this.objBDPed = new BDPed();
+        this.objLogPed = new LogPed(objBDPed);
+    
+    }
+
         
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Scanner sc = new Scanner(System.in);
-        
-        //Objetos del Paquete Logica
-        LogCliente objLogCliente = new LogCliente();
-        LogProd objLogProd = new LogProd();
-        LogPed objLogPed = new LogPed();
-        
-        //Objetos del paquete Clases
-        Cliente objCliente = new Cliente();
-        Direccion objDir = new Direccion();
-        Telefono objTelf = new Telefono();
-        
-        
-        
         Sistema_Restaurante app = new Sistema_Restaurante();
+
         
-        app.MostrarMenuPrincipal(sc, objCliente, objDir, objTelf, objLogCliente, objLogProd);
+        app.MostrarMenuPrincipal();
         
         
         byte opcion;
@@ -180,7 +191,7 @@ public class Sistema_Restaurante {
 
 
     
-    public void MostrarMenuPrincipal(Scanner sc, Cliente objCliente, Direccion objDir, Telefono objTelf, LogCliente objLogCliente, LogProd objLogProd) throws ClassNotFoundException, SQLException{
+    public void MostrarMenuPrincipal() throws ClassNotFoundException, SQLException{
         byte eleccion = 0;
         do{
             System.out.println("\nSISTEMA RESTAURANTE\n");
@@ -194,27 +205,27 @@ public class Sistema_Restaurante {
 
             switch(eleccion){
                 case 1:
-                    MostrarMenuAdministrador(sc, objCliente, objDir, objTelf, objLogCliente, objLogProd);
+                    MostrarMenuAdministrador();
                     break;
                 case 2:
-                    MostrarMenuCocinero(sc);
+                    MostrarMenuCocinero();
                     break;
                 case 3:
-                    MostrarMenuRepartidor(sc);
+                    MostrarMenuRepartidor();
                     break;
 
                 case 4:
-                    MostrarMenuCliente(sc);
+                    MostrarMenuCliente();
                     break;
                 default: 
-                    System.out.println("Opcion no Valida!");
+                    System.out.println("SALIENDO...");
             }
             
         }while(eleccion != 0);
         
     }
     
-    public void MostrarMenuAdministrador(Scanner sc, Cliente objCliente, Direccion objDir, Telefono objTelf, LogCliente objLogCliente, LogProd objLogProd) throws ClassNotFoundException, SQLException{
+    public void MostrarMenuAdministrador() throws ClassNotFoundException, SQLException{
         byte eleccion = 0;
         do{
             System.out.println("\nREGISTRO DE CLIENTES\n");
@@ -230,42 +241,24 @@ public class Sistema_Restaurante {
 
             switch(eleccion){
                 case 1:
-
-                    System.out.println("\nDATOS DEL CLIENTE");
-                    System.out.print("Nombre: ");
-                    objCliente.setNombre(sc.nextLine());
-
-                    System.out.print("Cedula: ");
-                    objCliente.setCedula(sc.nextLine());
-
+                    PedirDatosCliente();
                     //objLogCliente.InsertarLogicaCliente(objCliente);        
 
                     break;
 
                 case 2:
-
-                    System.out.println("\nDIRECCION\n");
-                    System.out.print("Calle 1: ");
-                    objDir.setCalle1(sc.nextLine());
-
-                    System.out.print("Calle 2: ");
-                    objDir.setCalle2(sc.nextLine());
+                    PedirDirCliente();
 
 
                     break;
 
                 case 3:
-                    System.out.println("\nTELEFONO\n");
-                    System.out.print("Nombre: ");
-                    objTelf.setNombre(sc.nextLine());
-
-                    System.out.print("Numero de Telefono: ");
-                    objTelf.setNum_Telefono(sc.nextLine());
+                    PedirTelfCliente(); 
 
                     break;
                     
                 case 4:
-                    RegistrarPedido(sc, objLogCliente, objLogProd);
+                    RegistrarPedido();
                     break;
                 default: 
                     System.out.println("Saliendo...");
@@ -275,7 +268,7 @@ public class Sistema_Restaurante {
         
     }
     
-    public void MostrarMenuCocinero(Scanner sc){
+    public void MostrarMenuCocinero(){
         byte eleccion = 0;
         do{
             System.out.println("1) Consultar Pedidos Pendientes");
@@ -300,7 +293,7 @@ public class Sistema_Restaurante {
         }while(eleccion != 0);
     }
     
-    public void MostrarMenuRepartidor(Scanner sc){
+    public void MostrarMenuRepartidor(){
         byte eleccion = 0;
         do{
             System.out.println("1) Consultar Pedidos Pendientes");
@@ -325,7 +318,7 @@ public class Sistema_Restaurante {
         }while(eleccion != 0);
     }
     
-    public void MostrarMenuCliente(Scanner sc){
+    public void MostrarMenuCliente(){
         byte eleccion = 0;
         do{
             System.out.println("1) Consultar el Pedido Actual");
@@ -354,8 +347,7 @@ public class Sistema_Restaurante {
         
     }
     
-    public void MostrarClientes(LogCliente objLogCliente) throws ClassNotFoundException, SQLException{
-        ArrayList<Cliente> list_Clientes = objLogCliente.ExtraerLogicaClientes();
+    public void MostrarClientes(ArrayList<Cliente> list_Clientes) throws ClassNotFoundException, SQLException{
         System.out.println("\nLISTA DE CLIENTES\n");
         System.out.printf("%-3S%12S%12S\n", "id", "nombre", "cedula");
         for(Cliente client: list_Clientes){  
@@ -363,8 +355,7 @@ public class Sistema_Restaurante {
         } 
     }  
     
-    public void MostrarMenuProductos(LogProd objLogProd) throws ClassNotFoundException, SQLException{
-        ArrayList<Producto> lista_Prod = objLogProd.ExtraerLogicaProducto();
+    public void MostrarMenuProductos(ArrayList<Producto> lista_Prod) throws ClassNotFoundException, SQLException{
         System.out.println("\nLISTA DE PRODUCTOS\n");
         System.out.printf("%-3S%12S%12S\n", "id", "nombre", "precio");
         for(Producto prod: lista_Prod){
@@ -372,21 +363,107 @@ public class Sistema_Restaurante {
         }
     }
     
-    public void RegistrarPedido(Scanner sc, LogCliente objlogCliente, LogProd objLogProd) throws ClassNotFoundException, SQLException{
+    public void RegistrarPedido() throws ClassNotFoundException, SQLException{
+        ArrayList<Cliente> list_Clientes = objLogCliente.ExtraerLogicaClientes();
+        ArrayList<Producto> lista_Prod = objLogProd.ExtraerLogicaProducto();
+        ArrayList<Direccion> lista_Dir = objLogCliente.LogicaExtraerDireccion();
+        ArrayList<Producto> prod_Elegidos = new ArrayList<>();
+        ArrayList<Producto_Pedido> objsProdPed = new ArrayList<>();
+
         int elec_Cliente = 0;
         int elec_Prod = 0;
-        MostrarClientes( objlogCliente);
-        System.out.print("Selecione el Cliente");
+        int elec_Dir = 0;
+        double total = 0.0;
+        int cant = 0;
+        int cn = 0;
+
+        MostrarClientes(list_Clientes);
+        System.out.print("\nSelecione el Cliente: ");
         elec_Cliente = sc.nextInt();
         sc.nextLine();   
         
-        MostrarMenuProductos(objLogProd);
+        //Mostrar Los producto al Usuario 
+        MostrarMenuProductos(lista_Prod); 
         do{
-        System.out.print("Selecione un Producto");
-        elec_Prod = sc.nextInt();
-        sc.nextLine();           
-        }while(elec_Prod);
+            System.out.print("\nSelecione un Producto o presione 0 para salir: ");
+            elec_Prod = sc.nextInt();
+            if(elec_Prod != 0){
+                System.out.println("Ingrese la Cantidad: ");
+                cant = sc.nextInt();
+                objProdPed.setCantidad(cant);
+        
+                for(int i = 0; i < lista_Prod.size(); i ++){
+                    if(elec_Prod == lista_Prod.get(i).getId_Producto()){
+                        prod_Elegidos.add(lista_Prod.get(i));
+                        objProdPed.setObjProd(lista_Prod.get(i));;
+                        objsProdPed.add(objProdPed);
+                    }        
+
+                }     
+            }
+            sc.nextLine();        
+
+        }while(elec_Prod != 0);
+
+
+        MostarDireccionCliente(lista_Dir);
+        System.out.print("\nSelecione una Direccion a Entregar: ");
+        elec_Dir = sc.nextInt();    
+        sc.nextLine();   
+        for(int i = 0; i < lista_Dir.size(); i ++){
+            if(elec_Dir == lista_Dir.get(i).getId_Direccion()){
+                objDir = lista_Dir.get(i);
+                }        
+
+            }                
+        }     
+        
+        total = objLogPed.CalcularTotal(lista_Prod, prod_Elegidos);
+
+        if(objLogPed.LogicaInsertarPedido("Pendiente", elec_Cliente, elec_Dir, prod_Elegidos, total, cant)){
+
+        }
      
     }
+    
+    public void PedirDatosCliente(){       
+        
+        System.out.println("\nDATOS DEL CLIENTE");
+        System.out.print("Nombre: ");
+        objCliente.setNombre(sc.nextLine());
+        
+        System.out.print("Cedula: ");
+        objCliente.setCedula(sc.nextLine());        
+    }
+    
+    public void PedirDirCliente(){
+        System.out.println("\nDIRECCION\n");
+        System.out.print("Calle 1: ");
+        objDir.setCalle1(sc.nextLine());
+        
+        System.out.print("Calle 2: ");
+        objDir.setCalle2(sc.nextLine());   
+        
+    }
+    
+    public void PedirTelfCliente(){
+        System.out.println("\nTELEFONO\n");
+        System.out.print("Nombre: ");
+        objTelf.setNombre(sc.nextLine());
+        
+        System.out.print("Numero de Telefono: ");
+        objTelf.setNum_Telefono(sc.nextLine());        
+        
+    }
+    
+    public void MostarDireccionCliente(ArrayList<Direccion> lista_Dir){
+        System.out.println("\nLISTA DE DIRECCIONES DISPONIBLES\n");
+        System.out.printf("%-3S%12S%12S\n", "id", "calle1", "calle2");
+        for(Direccion dir: lista_Dir){  
+            System.out.printf("%-2d%11s%18s\n", dir.getId_Direccion(), dir.getCalle1(), dir.getCalle2());
+        }         
+    }
+    
+    
 }
 

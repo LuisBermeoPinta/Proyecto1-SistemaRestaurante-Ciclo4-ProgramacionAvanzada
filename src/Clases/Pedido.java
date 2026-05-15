@@ -5,19 +5,39 @@ import java.util.ArrayList;
 
 public class Pedido {
     private int cod_Pedido;
+    private Cliente objCliente;
+    private Empleado objEmpl;
     private String estado;    
     private double total;
-    private String direccion_Entrega;
+    private Direccion objDir;
     private String fecha_Hora_Entrega;
-    private ArrayList<Producto> productos;
 
     public Pedido() {
     }
 
-    public Pedido(String estado) {
+    public Pedido(int cod_Pedido, Cliente objCliente, Empleado objEmpl, String estado, double total, Direccion objDir,
+            String fecha_Hora_Entrega) {
+        this.cod_Pedido = cod_Pedido;
+        this.objCliente = objCliente;
+        this.objEmpl = objEmpl;
         this.estado = estado;
+        this.total = total;
+        this.objDir = objDir;
+        this.fecha_Hora_Entrega = fecha_Hora_Entrega;
     }
-    
+
+
+
+
+
+    public Pedido(String estado, double total, String direccion_Entrega) {
+        this.estado = estado;
+        this.total = total;
+        this.direccion_Entrega = direccion_Entrega;
+    }
+
+
+
 
     public Pedido(String estado, String direccion_Entrega) {
         this.estado = estado;
