@@ -11,6 +11,7 @@ import Clases.Cliente;
 import Clases.Direccion;
 import Clases.Pedido;
 import Clases.Producto;
+import Clases.Producto_Pedido;
 
 public class LogPed {
 
@@ -41,26 +42,37 @@ public class LogPed {
 
 
 
-    public boolean LogicaInsertarPedido(String estado, int id_Cliente, int id_Dir, ArrayList<Integer> id_Producs, double total, int cant) throws ClassNotFoundException, SQLException {
-        int id = 0;
-        Pedido objPed = new Pedido(estado, total, );
-        for(int i = 0; i < id_Producs.size(); i ++){
-            if(objBDPed.InsertarPedido(objPedido, id_Cliente)(objBDPed, id) == 1){
-                return true;
-            
-            }  
-        }
-      
-        return false;
+    public void LogicaInsertarPedido(Pedido objPed) throws ClassNotFoundException, SQLException {
+        objBDPed.InsertarPedido(objPed);
     }
     
-    public double CalcularTotal(ArrayList<Producto> lista_Prod, ArrayList<Integer> prod_Elegidos){
+    public boolean LogicaInsertarProducto_Pedido(ArrayList<Producto_Pedido> lista_ProdPed) throws ClassNotFoundException, SQLException {
+        int cn = 0;
+        for(Producto_Pedido prodPed: lista_ProdPed){
+            cn += objBDPed.InsertarProducto_Pedido(prodPed);
+        }
+        if(cn == lista_ProdPed.size()){
+            return true;
+        }
+        return false;        
+    }    
+    
+    public double CalcularTotal(ArrayList<Producto> prod_Elegidos){
         double total = 0.0;
         for(int i = 0; i < prod_Elegidos.size(); i ++){
-            if(lista_Prod.get(i).getId_Producto() == prod_Elegidos.get(i)){
-                total += lista_Prod.get(i).getPrecio();
-            }
+                total += prod_Elegidos.get(i).getPrecio();
         }
         return total;
     } 
+
+    public Pedido LogicaExtraerPedido(Cliente objCliente) throws ClassNotFoundException, SQLException {
+        Pedido objPed = new Pedido();
+        ResultSet rs = objBDPed.ExtraerPedido(objCliente);
+        if (rs.next()) {
+            objPed.setCod_Pedido(rs.getInt("cod_Pedido"));
+
+        }    
+        return objPed;
+       
+    }
 }

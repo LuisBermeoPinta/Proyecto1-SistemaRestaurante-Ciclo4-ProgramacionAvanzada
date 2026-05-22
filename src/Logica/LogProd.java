@@ -14,12 +14,16 @@ public class LogProd {
     BDProd objBDProducto = new BDProd();       
     BDPed objBDPedido = new BDPed();
     
-    public boolean InsertarLogicaProducto(Producto objProducto) throws ClassNotFoundException, SQLException{
-        if(objBDProducto.InsertarProducto(objProducto) == 1){
+    public boolean InsertarLogicaProducto(ArrayList<Producto> lista_Productos) throws ClassNotFoundException, SQLException{
+        int cn = 0;
+        for(Producto prod: lista_Productos){
+            cn += objBDProducto.InsertarProducto(prod);
+        }
+        if(cn == lista_Productos.size()){
             return true;
         }
         return false;
-        
+       
     }
 
     public ArrayList<Producto> ExtraerLogicaProducto() throws ClassNotFoundException, SQLException {

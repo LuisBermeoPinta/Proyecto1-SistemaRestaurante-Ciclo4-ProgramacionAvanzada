@@ -11,12 +11,12 @@ public class Pedido {
     private double total;
     private Direccion objDir;
     private String fecha_Hora_Entrega;
+    private ArrayList<Producto_Pedido> objProdPed;
 
     public Pedido() {
     }
 
-    public Pedido(int cod_Pedido, Cliente objCliente, Empleado objEmpl, String estado, double total, Direccion objDir,
-            String fecha_Hora_Entrega) {
+    public Pedido(int cod_Pedido, Cliente objCliente, Empleado objEmpl, String estado, double total, Direccion objDir, String fecha_Hora_Entrega, ArrayList<Producto_Pedido> objProdPed) {
         this.cod_Pedido = cod_Pedido;
         this.objCliente = objCliente;
         this.objEmpl = objEmpl;
@@ -24,61 +24,8 @@ public class Pedido {
         this.total = total;
         this.objDir = objDir;
         this.fecha_Hora_Entrega = fecha_Hora_Entrega;
+        this.objProdPed = objProdPed;
     }
-
-
-
-
-
-    public Pedido(String estado, double total, String direccion_Entrega) {
-        this.estado = estado;
-        this.total = total;
-        this.direccion_Entrega = direccion_Entrega;
-    }
-
-
-
-
-    public Pedido(String estado, String direccion_Entrega) {
-        this.estado = estado;
-        this.direccion_Entrega = direccion_Entrega;
-    }
-    
-
-    public Pedido(String estado, double total, String direccion_Entrega, String fecha_Hora_Entrega, ArrayList<Producto> productos) {
-        this.estado = estado;
-        this.total = total;
-        this.direccion_Entrega = direccion_Entrega;
-        this.fecha_Hora_Entrega = fecha_Hora_Entrega;
-        this.productos = productos;
-    }
-    
-    
-
-    
-    public Pedido(int cod_Pedido, String estado, double total, String direccion_Entrega, String fecha_Hora_Entrega, ArrayList<Producto> productos) {
-        this.cod_Pedido = cod_Pedido;
-        this.estado = estado;
-        this.total = total;
-        this.direccion_Entrega = direccion_Entrega;
-        this.fecha_Hora_Entrega = fecha_Hora_Entrega;
-        this.productos = productos;
-    }
-
-    public Pedido(int cod_Pedido, String estado, double total, ArrayList<Producto> productos) {
-        this.cod_Pedido = cod_Pedido;
-        this.estado = estado;
-        this.total = total;
-        this.productos = productos;
-    }
-
-    public Pedido(String estado, double total, ArrayList<Producto> productos) {
-        this.estado = estado;
-        this.total = total;
-        this.productos = productos;
-    }
-    
-    
 
     public int getCod_Pedido() {
         return cod_Pedido;
@@ -86,6 +33,22 @@ public class Pedido {
 
     public void setCod_Pedido(int cod_Pedido) {
         this.cod_Pedido = cod_Pedido;
+    }
+
+    public Cliente getObjCliente() {
+        return objCliente;
+    }
+
+    public void setObjCliente(Cliente objCliente) {
+        this.objCliente = objCliente;
+    }
+
+    public Empleado getObjEmpl() {
+        return objEmpl;
+    }
+
+    public void setObjEmpl(Empleado objEmpl) {
+        this.objEmpl = objEmpl;
     }
 
     public String getEstado() {
@@ -104,12 +67,12 @@ public class Pedido {
         this.total = total;
     }
 
-    public String getDireccion_Entrega() {
-        return direccion_Entrega;
+    public Direccion getObjDir() {
+        return objDir;
     }
 
-    public void setDireccion_Entrega(String direccion_Entrega) {
-        this.direccion_Entrega = direccion_Entrega;
+    public void setObjDir(Direccion objDir) {
+        this.objDir = objDir;
     }
 
     public String getFecha_Hora_Entrega() {
@@ -120,22 +83,12 @@ public class Pedido {
         this.fecha_Hora_Entrega = fecha_Hora_Entrega;
     }
 
-    public ArrayList<Producto> getProductos() {
-        return productos;
+    public ArrayList<Producto_Pedido> getObjProdPed() {
+        return objProdPed;
     }
 
-    public void setProductos(ArrayList<Producto> productos) {
-        this.productos = productos;
+    public void setObjProdPed(ArrayList<Producto_Pedido> objProdPed) {
+        this.objProdPed = objProdPed;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-            
-    
+
 }

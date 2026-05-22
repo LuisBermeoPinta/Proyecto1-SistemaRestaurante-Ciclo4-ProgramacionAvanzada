@@ -24,53 +24,50 @@ public class LogCliente {
         
     }
     
-    public boolean InsertarLogicaDireccion(Cliente objCliente, ArrayList<Direccion> direcciones) throws ClassNotFoundException, SQLException{
-        ResultSet rs = objBDCliente.ExtraerIdentificador(objCliente);
-        int id = 0;
+    public boolean InsertarLogicaDireccion(Cliente objCliente) throws ClassNotFoundException, SQLException{
         int cn = 0;
-        if (rs.next()) {
-            id = rs.getInt("id_Cliente");    
-        }
-        for(Direccion dir: direcciones){
-            cn = objBDCliente.InsertarDireccion(dir, id);
+        for(Direccion dir: objCliente.getDirecciones()){
+            cn += objBDCliente.InsertarDireccion(dir, objCliente);
         }
         
-        if(cn == direcciones.size()){
+        if(cn == objCliente.getDirecciones().size()){
             return true;
             
         }        
         return false;
     }
     
-    public ArrayList<Direccion> LogicaExtraerDireccion() throws ClassNotFoundException, SQLException{
+    public boolean InsertarLogicaTelefono(Cliente objCliente) throws ClassNotFoundException, SQLException{
+        int cn = 0;
+        for(Telefono telf: objCliente.getTelefonos()){
+            cn += objBDCliente.InsertarTelefono(telf, objCliente);
+        }
+        
+        if(cn == objCliente.getTelefonos().size()){
+            return true;
+            
+        }        
+        return false;
+    }     
+    
+    public ArrayList<Direccion> LogicaExtraerDireccion(Cliente objCliente) throws ClassNotFoundException, SQLException{
         ArrayList<Direccion> lista_direcciones = new ArrayList<>();        
-        ResultSet rs = objBDCliente.ExtraerDireccion();
-        int id = 0;
+        ResultSet rs = objBDCliente.ExtraerDireccion(objCliente);
+        int id_Dir, id_Cliente;
         String calle1, calle2;
         
         while(rs.next()){
-            id = rs.getInt("id_Cliente");
+            id_Dir = rs.getInt("id_Direccion");
             calle1 = rs.getString("calle1");
             calle2 = rs.getString("calle2");
-            Direccion objDir = new Direccion(id, calle1, calle2);
+            Direccion objDir = new Direccion(id_Dir, objCliente, calle1, calle2);
             lista_direcciones.add(objDir);
         }
         return lista_direcciones;
 
     }     
 
-    public boolean InsertarLogicaTelefono(Cliente objCliente, ArrayList<Telefono> telefonos) throws ClassNotFoundException, SQLException{
-        ResultSet rs = objBDCliente.ExtraerIdentificador(objCliente);
-        int id = 0;
-        if(rs.next()){
-            id = rs.getInt("id_Cliente");
-        }
-        if(objBDCliente.InsertarTelefono(telefonos, id) == telefonos.size()){
-            return true;
-        }
-        return false;
-
-    }    
+  
     public boolean InsertarLogicaPedido (Cliente objCliente, Empleado objEmpleado, ArrayList<Pedido> pedidos) throws ClassNotFoundException, SQLException{
         ResultSet rsCliente = objBDCliente.ExtraerIdentificador(objCliente);
         int id_Cliente = 0;
@@ -110,5 +107,14 @@ public class LogCliente {
         return lista_Clientes;
 
     } 
+
+    public boolean ComprobarSiExisteClientes() throws ClassNotFoundException, SQLException {
+        ResultSet rs = objBDCliente.ExtraerClientes();
+        while(rs.next()){
+            return true;
+        }        
+        return false;
+            
+    }
     
 }

@@ -71,5 +71,11 @@ public class BDProd {
         ps.setString(1, objProducto.getNombre());
 
         return ps.executeQuery();
-    }        
+    }       
+    
+    public ResultSet ExtraerProdId(){
+        String sentencia = "select * from producto where id_Producto = ?";
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        ps.setString(1, objProducto.getNombre());        
+    }
 }

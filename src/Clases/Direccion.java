@@ -5,11 +5,20 @@ package Clases;
 public class Direccion {
   
     private int id_Direccion;
+    private Cliente objCliente;
     private String calle1;
     private String calle2;
 
     public Direccion() {
     }
+
+    public Direccion(int id_Direccion, Cliente objCliente, String calle1, String calle2) {
+        this.id_Direccion = id_Direccion;
+        this.objCliente = objCliente;
+        this.calle1 = calle1;
+        this.calle2 = calle2;
+    }
+    
     
     public Direccion(int id_Direccion, String calle1, String calle2) {
         this.id_Direccion = id_Direccion;

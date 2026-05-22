@@ -18,8 +18,7 @@ public class BDCliente {
     
     public int InsertarCliente(Cliente objCliente) throws ClassNotFoundException, SQLException  {
         // Consulta SQL parametrizada para evitar inyección SQL
-        String Sentencia = "insert into Cliente (nombre, cedula) "
-               + "values (?, ?)" ;
+        String Sentencia = "insert into Cliente (nombre, cedula) " + "values (?, ?)";
        
        
        // Prepara la sentencia SQL con los parámetros
@@ -32,47 +31,48 @@ public class BDCliente {
        return ps.executeUpdate();
     } 
     
-    public ResultSet ExtraerClientes() throws ClassNotFoundException, SQLException{
-        String sentencia = "select * from cliente";
-        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
-        return ps.executeQuery();
-    }  
-    
-    
-    public int InsertarDireccion(Direccion direccion, int id_Cliente) throws ClassNotFoundException, SQLException{
+    public int InsertarDireccion(Direccion direccion, Cliente objCliente) throws ClassNotFoundException, SQLException{
         int resultado = 0;
         String sentencia = "Insert into Direccion (id_Cliente, calle1, calle2)"
                 + "values (?, ?, ?)";    
         
         PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
-        ps.setInt(1, id_Cliente);
+        ps.setInt(1, objCliente.getId_Cliente());
         ps.setString(2, direccion.getCalle1());
         ps.setString(3,  direccion.getCalle2());    
         resultado += ps.executeUpdate();
         return resultado;
     }
     
-    public ResultSet ExtraerDireccion() throws ClassNotFoundException, SQLException{
-        String sentencia = "Select * from direccion";
+    public int InsertarTelefono(Telefono telefono, Cliente objCliente) throws ClassNotFoundException, SQLException{
+        int resultado = 0;
+        String Sentencia = "Insert into Telefono (id_Cliente, tipo, num_Telefono)"
+                + "values(?, ?, ?)";
+        
+        PreparedStatement ps = con.getConnection().prepareStatement(Sentencia);
+        ps.setInt(1, objCliente.getId_Cliente());
+        ps.setString(2, telefono.getNombre());
+        ps.setString(3, telefono.getNum_Telefono());
+        resultado += ps.executeUpdate();
+            
+        return resultado;
+        
+    } 
+    
+    public ResultSet ExtraerClientes() throws ClassNotFoundException, SQLException{
+        String sentencia = "select * from cliente";
         PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        return ps.executeQuery();
+    }      
+    
+    public ResultSet ExtraerDireccion(Cliente objCliente) throws ClassNotFoundException, SQLException{
+        String sentencia = "Select * from direccion where id_Cliente = ?";
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        ps.setInt(1, objCliente.getId_Cliente());
         return ps.executeQuery();
     }
     
-    public int InsertarTelefono(ArrayList<Telefono> telefonos, int id_Cliente) throws ClassNotFoundException, SQLException{
-        int resultado = 0;
-        for(Telefono telf: telefonos){
-            String Sentencia = "Insert into Telefono (id_Cliente, tipo, num_Telefono)"
-                    + "values(?, ?, ?)";
-            PreparedStatement ps = con.getConnection().prepareStatement(Sentencia);
-            ps.setInt(1, id_Cliente);
-            ps.setString(2, telf.getNombre());
-            ps.setString(3, telf.getNum_Telefono());
-            resultado += ps.executeUpdate();
-            
-        }
-        return resultado;
-        
-    }
+
     
     public int InsertarPedido(ArrayList<Pedido> pedidos, int id_Cliente, int id_Empleado) throws ClassNotFoundException, SQLException{
         int resultado = 0;
