@@ -1,6 +1,7 @@
 
 package Clases;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Pedido {
@@ -9,19 +10,21 @@ public class Pedido {
     private Empleado objEmpl;
     private String estado;    
     private double total;
+    private String receptor;
     private Direccion objDir;
-    private String fecha_Hora_Entrega;
+    private LocalDateTime fecha_Hora_Entrega;
     private ArrayList<Producto_Pedido> objProdPed;
 
     public Pedido() {
     }
 
-    public Pedido(int cod_Pedido, Cliente objCliente, Empleado objEmpl, String estado, double total, Direccion objDir, String fecha_Hora_Entrega, ArrayList<Producto_Pedido> objProdPed) {
+    public Pedido(int cod_Pedido, Cliente objCliente, Empleado objEmpl, String estado, double total, String receptor, Direccion objDir, LocalDateTime fecha_Hora_Entrega, ArrayList<Producto_Pedido> objProdPed) {
         this.cod_Pedido = cod_Pedido;
         this.objCliente = objCliente;
         this.objEmpl = objEmpl;
         this.estado = estado;
         this.total = total;
+        this.receptor = receptor;
         this.objDir = objDir;
         this.fecha_Hora_Entrega = fecha_Hora_Entrega;
         this.objProdPed = objProdPed;
@@ -67,6 +70,14 @@ public class Pedido {
         this.total = total;
     }
 
+    public String getReceptor() {
+        return receptor;
+    }
+
+    public void setReceptor(String receptor) {
+        this.receptor = receptor;
+    }
+
     public Direccion getObjDir() {
         return objDir;
     }
@@ -75,11 +86,11 @@ public class Pedido {
         this.objDir = objDir;
     }
 
-    public String getFecha_Hora_Entrega() {
+    public LocalDateTime getFecha_Hora_Entrega() {
         return fecha_Hora_Entrega;
     }
 
-    public void setFecha_Hora_Entrega(String fecha_Hora_Entrega) {
+    public void setFecha_Hora_Entrega(LocalDateTime fecha_Hora_Entrega) {
         this.fecha_Hora_Entrega = fecha_Hora_Entrega;
     }
 
@@ -90,5 +101,11 @@ public class Pedido {
     public void setObjProdPed(ArrayList<Producto_Pedido> objProdPed) {
         this.objProdPed = objProdPed;
     }
+
+    @Override
+    public String toString() {
+        return "Pedido{" + "cod_Pedido=" + cod_Pedido + ", objCliente=" + objCliente + ", objEmpl=" + objEmpl + ", estado=" + estado + ", total=" + total + ", receptor=" + receptor + ", objDir=" + objDir + ", fecha_Hora_Entrega=" + fecha_Hora_Entrega + ", objProdPed=" + objProdPed + '}';
+    }
+
 
 }

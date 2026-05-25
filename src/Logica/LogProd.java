@@ -53,7 +53,7 @@ public class LogProd {
     }    */
     
     
-        public boolean InsertarLogicaPedidoProducto(Pedido objPedido, ArrayList<Byte> prod_Elegidos, ArrayList<Integer> cantidades, Cliente objCliente) throws ClassNotFoundException, SQLException{
+        /*public boolean InsertarLogicaPedidoProducto(Pedido objPedido, ArrayList<Byte> prod_Elegidos, ArrayList<Integer> cantidades, Cliente objCliente) throws ClassNotFoundException, SQLException{
         ResultSet rs1 = objBDPedido.ExtraerIdentificador(objPedido, objCliente);
         int cod_Pedido = 0;
 
@@ -67,5 +67,5 @@ public class LogProd {
         }        
         return false;
     }   
-    
+    */
 }
