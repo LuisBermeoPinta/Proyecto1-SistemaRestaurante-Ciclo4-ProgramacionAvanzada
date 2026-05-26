@@ -25,7 +25,7 @@ public class MenuCocinero {
 
             switch (eleccion) {
                 case 1:
-                    
+
                     ArrayList<Pedido> list_Ped = objLogPed.ConsultarPedidosPendientes();
                     if (!list_Ped.isEmpty()) {
                         MostrarPedidosPendientes(list_Ped);
@@ -34,7 +34,7 @@ public class MenuCocinero {
                     }
                     break;
                 case 2:
-                    
+
                     list_Ped = objLogPed.ConsultarPedidosPendientes();
                     if (!list_Ped.isEmpty()) {
                         RegistrarEstadoPedido(list_Ped);
@@ -77,21 +77,30 @@ public class MenuCocinero {
             if (ped.getCod_Pedido() == elec_Ped && ped.getEstado().equalsIgnoreCase("Pendiente")) {
                 ped.setEstado("En Preparacion");
                 //Se actualiza el estado del pedido 
-                objLogPed.ActualizarEstadoPedido(ped);
+                if (objLogPed.ActualizarEstadoPedido(ped)) {
+                    System.out.println("Estado cambiado con Exito!!");
+                } else {
+                    System.out.println("No se pudo cambiar el estado!!");
+                }
                 objHistPed.setObjPedido(ped);
-                
+
                 //Se guarda el historial de ese pedido
                 objLogPed.InsertarHistorial_Pedido(objHistPed);
-                
-                //En caso de querer de una vez confirmar la entrega del pedido el estado pasa de En preparacion a Listo para la Entega
+
+                /*En caso de querer de una vez confirmar la entrega del pedido
+                el estado pasa de En preparacion a Listo para la Entega*/
                 System.out.print("Desea entregar el Pedido? (s/n): ");
                 opcion = sc.nextLine();
                 if (opcion.equalsIgnoreCase("s")) {
                     ped.setEstado("Listo para Entrega");
                     //Se actualiza el estado en la base de datos
-                    objLogPed.ActualizarEstadoPedido(ped);
+                    if (objLogPed.ActualizarEstadoPedido(ped)) {
+                        System.out.println("\nEstado cambiado con Exito!!");
+                    } else {
+                        System.out.println("\nNo se pudo cambiar el estado!!");
+                    }
                     objHistPed.setObjPedido(ped);
-                    
+
                     //Y tambien el Historial del Pedido
                     objLogPed.InsertarHistorial_Pedido(objHistPed);
 
@@ -102,7 +111,11 @@ public class MenuCocinero {
                 opcion = sc.nextLine();
                 if (opcion.equalsIgnoreCase("s")) {
                     ped.setEstado("Listo para Entrega");
-                    objLogPed.ActualizarEstadoPedido(ped);
+                    if (objLogPed.ActualizarEstadoPedido(ped)) {
+                        System.out.println("\nEstado cambiado con Exito!!");
+                    } else {
+                        System.out.println("\nNo se pudo cambiar el estado!!");
+                    }
                     objHistPed.setObjPedido(ped);
                     objLogPed.InsertarHistorial_Pedido(objHistPed);
                 }

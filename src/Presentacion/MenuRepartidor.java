@@ -83,7 +83,11 @@ public class MenuRepartidor {
                 ped.setEstado("En Camino");
 
                 //Se actualiza el estado en la base de datos
-                objLogPed.ActualizarEstadoPedido(ped);
+                if (objLogPed.ActualizarEstadoPedido(ped)) {
+                    System.out.println("\nEstado cambiado con Exito!!");
+                } else {
+                    System.out.println("\nNo se pudo cambiar el estado!!");
+                }
 
                 //Y adicional se agrega el objeto con ese estado en concreto dentro de un atributo del objeto objHistPed
                 objHistPed.setObjPedido(ped);
@@ -103,7 +107,11 @@ public class MenuRepartidor {
                     ped.setEstado("Entregado");
 
                     //Y finalmente se actualiza en la base de datos tanto el estado del pedido como el historial
-                    objLogPed.ActualizarEstadoPedido(ped);
+                    if (objLogPed.ActualizarEstadoPedido(ped)) {
+                        System.out.println("\nEstado cambiado con Exito!!");
+                    } else {
+                        System.out.println("\nNo se pudo cambiar el estado!!");
+                    }
                     objHistPed.setObjPedido(ped);
                     objLogPed.InsertarHistorial_Pedido(objHistPed);
 
@@ -115,7 +123,11 @@ public class MenuRepartidor {
                 ped.setReceptor(sc.nextLine());
                 ped.setFecha_Hora_Entrega(LocalDateTime.now());
                 ped.setEstado("Entregado");
-                objLogPed.ActualizarEstadoPedido(ped);
+                if (objLogPed.ActualizarEstadoPedido(ped)) {
+                    System.out.println("\nEstado cambiado con Exito!!");
+                } else {
+                    System.out.println("\nNo se pudo cambiar el estado!!");
+                }
                 objHistPed.setObjPedido(ped);
                 objLogPed.InsertarHistorial_Pedido(objHistPed);
 

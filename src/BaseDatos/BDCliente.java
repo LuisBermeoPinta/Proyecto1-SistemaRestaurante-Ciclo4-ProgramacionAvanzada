@@ -44,7 +44,7 @@ public class BDCliente {
 
         PreparedStatement ps = con.getConnection().prepareStatement(Sentencia);
         ps.setInt(1, objCliente.getId_Cliente());
-        ps.setString(2, telefono.getNombre());
+        ps.setString(2, telefono.getTipo());
         ps.setString(3, telefono.getNum_Telefono());
         resultado += ps.executeUpdate();
 

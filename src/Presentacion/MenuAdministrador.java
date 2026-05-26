@@ -38,17 +38,22 @@ public class MenuAdministrador {
             switch (eleccion) {
                 case 1:
                     Cliente nuevoCliente = PedirDatosCliente();
+                    if (nuevoCliente.getCedula().length() == 10) {
 
-                    if (objLogCliente.InsertarCliente(nuevoCliente)) {
-                        System.out.println("Cliente registrado con exito!!");
-                    } else {
-                        System.out.println("No se pudo registrar el Cliente!!");
+                        if (objLogCliente.InsertarCliente(nuevoCliente)) {
+                            System.out.println("Cliente registrado con exito!!");
+                        } else {
+                            System.out.println("No se pudo registrar el Cliente!!");
+                        }
+                    }else{
+                        System.out.println("La Cedula no es Valida!!");
                     }
 
                     break;
 
                 case 2:
                     Cliente clienteConDirecciones = PedirDirCliente();
+
                     if (clienteConDirecciones.getDirecciones() != null) {
 
                         if (objLogCliente.InsertarLogicaDireccion(clienteConDirecciones)) {
@@ -175,7 +180,7 @@ public class MenuAdministrador {
                 objTelf = new Telefono();
                 System.out.println("\nTELEFONO\n");
                 System.out.print("Nombre: ");
-                objTelf.setNombre(sc.nextLine());
+                objTelf.setTipo(sc.nextLine());
 
                 System.out.print("Numero de Telefono: ");
                 objTelf.setNum_Telefono(sc.nextLine());
@@ -232,7 +237,7 @@ public class MenuAdministrador {
             }
             //Salida: un objCliente extraido del ArrayList list_Clientes
             ArrayList<Direccion> lista_Dir = objLogCliente.LogicaExtraerDireccion(objCliente);
-            if (!lista_Dir.isEmpty()) {             
+            if (!lista_Dir.isEmpty()) {
                 //Luego Mostramos la lista de productos disponibles
                 metodosComp.MostrarProductos(lista_Prod);
                 /*Dentro de un Do While para que obligatoriamente se elija un producto y se termina
@@ -243,8 +248,8 @@ public class MenuAdministrador {
                     elec_Prod = sc.nextInt();
 
                     if (elec_Prod != 0) {
-                        
-                        objProd = null; 
+
+                        objProd = null;
                         //Se anade un control para verificar que el producto elegido exista
                         for (Producto prod : lista_Prod) {
                             if (prod.getId_Producto() == elec_Prod) {
@@ -254,12 +259,12 @@ public class MenuAdministrador {
 
                         //Solo si el producto existe, pedimos cantidad y guardamos
                         if (objProd != null) {
-                            
-                            //Creamos un nuevo objeto Producto_Pedido en cada iteracion ya que los objetos son Variables no primitivas que se pasan por referencia
-                            objProdPed = new Producto_Pedido();
-                            
-                            //objProdPed.setObjProd(objProd);
 
+                            /*Creamos un nuevo objeto Producto_Pedido en cada iteracion ya que los objetos 
+                            son Variables no primitivas que se pasan por referencia*/
+                            objProdPed = new Producto_Pedido();
+
+                            //objProdPed.setObjProd(objProd);
                             System.out.print("Ingrese la Cantidad: ");
                             cant = sc.nextInt();
                             objProdPed.setCantidad(cant);
@@ -291,7 +296,7 @@ public class MenuAdministrador {
                 sc.nextLine();
                 //Luego se guarda esa lista de productos_Pedidos dentro del objeto Pedido ya que un pedido tiene muchos productos
                 objPed.setObjProdPed(lista_ProdPed);
-                
+
                 //Se calcula el total dependiendo los productos elegidos
                 total = objLogPed.CalcularTotal(objPed);
 
@@ -302,22 +307,22 @@ public class MenuAdministrador {
                 objPed.setTotal(total);
 
                 //Se llama a la funcion que se encarga de cordinar con la base de datos para insertar el pedido 
-                if(objLogPed.LogicaInsertarPedido(objPed)){
+                if (objLogPed.LogicaInsertarPedido(objPed)) {
                     System.out.println("Pedido insertado con Exito!!");
-                }else{
+                } else {
                     System.out.println("No se pudo registrar el Pedido!!");
                 }
                 //Una vez insertado lo extraemos nuevamente para saber su ID
                 Pedido ped = objLogPed.LogicaExtraerPedido(objCliente);
-                
+
                 // Con este obj con su ID procedemos a setearlo al objeto que teniamos antes
                 objPed.setCod_Pedido(ped.getCod_Pedido());
-                
+
                 //Y ese mismo objeto lo guardamos en el historial pedido ya que este contiene objeto de tipo pedido
                 objHistPed.setObjPedido(objPed);
 
                 //Se insertar en la base de datos y si todo sale bien se muestra el mensaje de exito
-                if(objLogPed.InsertarHistorial_Pedido(objHistPed)){
+                if (objLogPed.InsertarHistorial_Pedido(objHistPed)) {
                     System.out.println("Historial_Pedido insertado con Exito!!");
                 }
 

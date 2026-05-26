@@ -106,7 +106,8 @@ public class MenuCliente {
         int elec_Cliente, elec_Ped;
 
         if (!list_Clientes.isEmpty()) {
-            //En caso de que si existan clientes se procede a pedir el ID del mismo junto con el ID del pedido correspondiente a dicho cliente
+            /*En caso de que si existan clientes se procede a pedir el ID del mismo 
+            junto con el ID del pedido correspondiente a dicho cliente*/
             metodosComp.MostrarClientes(list_Clientes);
             System.out.print("\nIngrese el Cliente: ");
             elec_Cliente = sc.nextInt();
@@ -120,7 +121,8 @@ public class MenuCliente {
                     for (Pedido ped : list_Ped) {
                         if (ped.getCod_Pedido() == elec_Ped) {
                             
-                            //Luego se asigna el historial pedido a una lista gracias a la eleccion del usuario ya que este corresponde al mismo ID del pedido
+                            /*Luego se asigna el historial pedido a una lista gracias a la eleccion 
+                            del usuario ya que este corresponde al mismo ID del pedido*/
                             list_HistPed = objLogPed.ConsultarHistorialPedido(elec_Ped);
                             
                             //Y finalmente se muestra el Historial de ese Pedido
