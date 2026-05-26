@@ -39,6 +39,11 @@ public class Historial_Pedido {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Historial_Pedido{" + "id_Historial=" + id_Historial + ", objPedido=" + objPedido + ", estado=" + estado + '}';
+    }
     
     
     

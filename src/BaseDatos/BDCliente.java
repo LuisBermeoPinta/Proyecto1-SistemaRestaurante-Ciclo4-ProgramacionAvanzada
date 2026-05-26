@@ -3,7 +3,6 @@ package BaseDatos;
 
 import Clases.Cliente;
 import Clases.Direccion;
-import Clases.Empleado;
 import Clases.Pedido;
 import Clases.Telefono;
 import java.sql.PreparedStatement;
@@ -17,12 +16,9 @@ public class BDCliente {
     Conexion con = new Conexion();
     
     public int InsertarCliente(Cliente objCliente) throws ClassNotFoundException, SQLException  {
-        // Consulta SQL parametrizada para evitar inyección SQL
-        String Sentencia = "insert into Cliente (nombre, cedula) " + "values (?, ?)";
+        String sentencia = "insert into Cliente (nombre, cedula) " + "values (?, ?)";
        
-       
-       // Prepara la sentencia SQL con los parámetros
-       PreparedStatement ps = con.getConnection().prepareStatement(Sentencia);
+       PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
        ps.setString(1, objCliente.getNombre());
        ps.setString(2, objCliente.getCedula());
        
@@ -96,5 +92,9 @@ public class BDCliente {
 
         return ps.executeQuery();
     }        
+
+    public ResultSet ExtraerClienteXID() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
          
 }

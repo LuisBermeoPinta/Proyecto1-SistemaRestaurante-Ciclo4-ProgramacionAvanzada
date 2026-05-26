@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Pedido {
     private int cod_Pedido;
     private Cliente objCliente;
-    private Empleado objEmpl;
     private String estado;    
     private double total;
     private String receptor;
@@ -18,10 +17,9 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(int cod_Pedido, Cliente objCliente, Empleado objEmpl, String estado, double total, String receptor, Direccion objDir, LocalDateTime fecha_Hora_Entrega, ArrayList<Producto_Pedido> objProdPed) {
+    public Pedido(int cod_Pedido, Cliente objCliente, String estado, double total, String receptor, Direccion objDir, LocalDateTime fecha_Hora_Entrega, ArrayList<Producto_Pedido> objProdPed) {
         this.cod_Pedido = cod_Pedido;
         this.objCliente = objCliente;
-        this.objEmpl = objEmpl;
         this.estado = estado;
         this.total = total;
         this.receptor = receptor;
@@ -44,14 +42,6 @@ public class Pedido {
 
     public void setObjCliente(Cliente objCliente) {
         this.objCliente = objCliente;
-    }
-
-    public Empleado getObjEmpl() {
-        return objEmpl;
-    }
-
-    public void setObjEmpl(Empleado objEmpl) {
-        this.objEmpl = objEmpl;
     }
 
     public String getEstado() {
@@ -104,8 +94,8 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "cod_Pedido=" + cod_Pedido + ", objCliente=" + objCliente + ", objEmpl=" + objEmpl + ", estado=" + estado + ", total=" + total + ", receptor=" + receptor + ", objDir=" + objDir + ", fecha_Hora_Entrega=" + fecha_Hora_Entrega + ", objProdPed=" + objProdPed + '}';
+        return "Pedido{" + "cod_Pedido=" + cod_Pedido + ", objCliente=" + objCliente + ", estado=" + estado + ", total=" + total + ", receptor=" + receptor + ", objDir=" + objDir + ", fecha_Hora_Entrega=" + fecha_Hora_Entrega + ", objProdPed=" + objProdPed + '}';
     }
-
+    
 
 }

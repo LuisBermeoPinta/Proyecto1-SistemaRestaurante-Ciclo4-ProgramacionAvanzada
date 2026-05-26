@@ -7,6 +7,7 @@ import Clases.Producto_Pedido;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class BDPed {
 
@@ -20,7 +21,7 @@ public class BDPed {
         return ps.executeQuery();
     }
 
-    public void InsertarPedido(Pedido objPed) throws ClassNotFoundException, SQLException {
+    public int InsertarPedido(Pedido objPed) throws ClassNotFoundException, SQLException {
         // Consulta SQL parametrizada para evitar inyección SQL
         String Sentencia = "insert into Pedido (id_Cliente, estado, total, id_direccion_Entrega) "
                 + "values (?, ?, ?, ?)";
@@ -31,8 +32,8 @@ public class BDPed {
         ps.setString(2, objPed.getEstado());
         ps.setDouble(3, objPed.getTotal());
         ps.setInt(4, objPed.getObjDir().getId_Direccion());
-        ps.executeUpdate();
-        // Ejecuta la inserción y retorna el resultado
+        
+        return ps.executeUpdate();
     }
 
     public ResultSet ExtraerPedido(Cliente objCliente) throws ClassNotFoundException, SQLException {
@@ -99,14 +100,14 @@ public class BDPed {
         return ps.executeQuery();
     }
 
-    public void InsertarHistorial_Pedido(Historial_Pedido objHistPed) throws ClassNotFoundException, SQLException {
+    public int InsertarHistorial_Pedido(Historial_Pedido objHistPed) throws ClassNotFoundException, SQLException {
         String sentencia = "INSERT INTO historial_Pedido(cod_Pedido, estado)"
                 + "VALUES(?, ?)";
         PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
         ps.setInt(1, objHistPed.getObjPedido().getCod_Pedido());
         ps.setString(2, objHistPed.getObjPedido().getEstado());
 
-        ps.executeUpdate();
+        return ps.executeUpdate();
     }
 
     public ResultSet ExtraerPedidoXCodigo(int cod) throws ClassNotFoundException, SQLException {
@@ -129,13 +130,22 @@ public class BDPed {
         return ps.executeQuery();
     }
     
-    public ResultSet ConsultarPedidosXIDCliente(int id_Cliente) throws ClassNotFoundException, SQLException{
+    public ResultSet ConsultarPedidoXIDCliente(int id_Cliente) throws ClassNotFoundException, SQLException{
         String sentencia = "SELECT cod_Pedido, estado FROM Pedido WHERE id_Cliente = ?";
 
         PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
         ps.setInt(1, id_Cliente);
 
         return ps.executeQuery();        
+    }
+
+    public ResultSet ConsultarHistorialPedido(int id_Pedido) throws ClassNotFoundException, SQLException {
+        String sentencia = "SELECT * FROM historial_Pedido where cod_Pedido = ?";
+        
+        PreparedStatement ps = con.getConnection().prepareStatement(sentencia);
+        ps.setInt(1, id_Pedido);
+        
+        return ps.executeQuery();
     }
         
 }

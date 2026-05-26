@@ -14,7 +14,7 @@ public class LogProd {
     BDProd objBDProducto = new BDProd();       
     BDPed objBDPedido = new BDPed();
     
-    public boolean InsertarLogicaProducto(ArrayList<Producto> lista_Productos) throws ClassNotFoundException, SQLException{
+    public boolean InsertarProducto(ArrayList<Producto> lista_Productos) throws ClassNotFoundException, SQLException{
         int cn = 0;
         for(Producto prod: lista_Productos){
             cn += objBDProducto.InsertarProducto(prod);
