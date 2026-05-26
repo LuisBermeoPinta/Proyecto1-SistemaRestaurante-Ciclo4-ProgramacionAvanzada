@@ -76,18 +76,27 @@ public class MenuCocinero {
         for (Pedido ped : list_Ped) {
             if (ped.getCod_Pedido() == elec_Ped && ped.getEstado().equalsIgnoreCase("Pendiente")) {
                 ped.setEstado("En Preparacion");
+                //Se actualiza el estado del pedido 
                 objLogPed.ActualizarEstadoPedido(ped);
                 objHistPed.setObjPedido(ped);
+                
+                //Se guarda el historial de ese pedido
                 objLogPed.InsertarHistorial_Pedido(objHistPed);
+                
+                //En caso de querer de una vez confirmar la entrega del pedido el estado pasa de En preparacion a Listo para la Entega
                 System.out.print("Desea entregar el Pedido? (s/n): ");
                 opcion = sc.nextLine();
                 if (opcion.equalsIgnoreCase("s")) {
                     ped.setEstado("Listo para Entrega");
+                    //Se actualiza el estado en la base de datos
                     objLogPed.ActualizarEstadoPedido(ped);
                     objHistPed.setObjPedido(ped);
+                    
+                    //Y tambien el Historial del Pedido
                     objLogPed.InsertarHistorial_Pedido(objHistPed);
 
                 }
+                //En caso de que haya seleccionado n aqui nuevamnte se le pregunta si desea Entregar el Pedido
             } else if (ped.getCod_Pedido() == elec_Ped && ped.getEstado().equalsIgnoreCase("En Preparacion")) {
                 System.out.print("Desea entregar el Pedido? (s/n): ");
                 opcion = sc.nextLine();

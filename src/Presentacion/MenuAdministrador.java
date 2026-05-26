@@ -75,14 +75,7 @@ public class MenuAdministrador {
                     break;
 
                 case 4:
-                    /*ArrayList<Producto> lista_Prod = new ArrayList<>();
-                    lista_Prod.add(new Producto("Papas", 1.25));
-                    lista_Prod.add(new Producto("Refresco", 1.00));
-                    lista_Prod.add(new Producto("Hamburguesa", 2.50));
-                    lista_Prod.add(new Producto("Hot Dog", 2));
-                    lista_Prod.add(new Producto("Pizza", 4));
-                    lista_Prod.add(new Producto("Alitas BBQ", 3));
-                    objLogProd.InsertarProducto(lista_Prod);*/
+
                     RegistrarPedido();
                     break;
 
@@ -108,14 +101,6 @@ public class MenuAdministrador {
         objCliente.setCedula(sc.nextLine());
 
         return objCliente;
-    }
-
-    public void MostrarMenuProductos(ArrayList<Producto> lista_Prod) throws ClassNotFoundException, SQLException {
-        System.out.println("\nLISTA DE PRODUCTOS\n");
-        System.out.printf("%-3S%12S%12S\n", "id", "nombre", "precio");
-        for (Producto prod : lista_Prod) {
-            System.out.printf("%-9d%-12s%s\n", prod.getId_Producto(), prod.getNombre(), prod.getPrecio());
-        }
     }
 
     public void MostarDireccionCliente(ArrayList<Direccion> lista_Dir) {
@@ -215,9 +200,10 @@ public class MenuAdministrador {
         Producto_Pedido objProdPed;
         Direccion objDir = new Direccion();
         Historial_Pedido objHistPed = new Historial_Pedido();
+        MetodosCompartidos metodosComp = new MetodosCompartidos();
 
         ArrayList<Cliente> list_Clientes = objLogCliente.ExtraerClientes();
-        ArrayList<Producto> lista_Prod = objLogProd.ExtraerLogicaProducto();
+        ArrayList<Producto> lista_Prod = objLogProd.ConsultarProductos();
         ArrayList<Producto> prod_Elegidos = new ArrayList<>();
         ArrayList<Producto_Pedido> lista_ProdPed = new ArrayList<>();
 
@@ -247,8 +233,8 @@ public class MenuAdministrador {
             //Salida: un objCliente extraido del ArrayList list_Clientes
             ArrayList<Direccion> lista_Dir = objLogCliente.LogicaExtraerDireccion(objCliente);
             if (!lista_Dir.isEmpty()) {             
-                //Luego Mostramnos la lista de productos disponibles
-                MostrarMenuProductos(lista_Prod);
+                //Luego Mostramos la lista de productos disponibles
+                metodosComp.MostrarProductos(lista_Prod);
                 /*Dentro de un Do While para que obligatoriamente se elija un producto y se termina
             cuando se presiona el numero 0
                  */
@@ -257,28 +243,29 @@ public class MenuAdministrador {
                     elec_Prod = sc.nextInt();
 
                     if (elec_Prod != 0) {
-                        // 1. Buscamos el producto primero
-                        objProd = null; // <--- MODIFICADO: Reiniciamos la referencia
+                        
+                        objProd = null; 
+                        //Se anade un control para verificar que el producto elegido exista
                         for (Producto prod : lista_Prod) {
                             if (prod.getId_Producto() == elec_Prod) {
                                 objProd = prod;
                             }
                         }
 
-                        // 2. Solo si el producto existe, pedimos cantidad y guardamos
+                        //Solo si el producto existe, pedimos cantidad y guardamos
                         if (objProd != null) {
-                            //prod_Elegidos.add(objProd);
-
-                            // <--- MODIFICADO: Creamos UN SOLO objeto por cada producto seleccionado
+                            
+                            //Creamos un nuevo objeto Producto_Pedido en cada iteracion ya que los objetos son Variables no primitivas que se pasan por referencia
                             objProdPed = new Producto_Pedido();
-                            objProdPed.setObjProd(objProd);
+                            
+                            //objProdPed.setObjProd(objProd);
 
                             System.out.print("Ingrese la Cantidad: ");
                             cant = sc.nextInt();
                             objProdPed.setCantidad(cant);
+                            //Una vez confirmada la cantidad se procede a guardar el objeto producto dentro de obj Producto_Pedido
                             objProdPed.setObjProd(objProd);
-
-                            // <--- MODIFICADO: Añadimos a la lista el objeto completo (producto + cantidad)
+                            //Y ese mismo obj en una lista
                             lista_ProdPed.add(objProdPed);
                         } else {
                             System.out.println("Producto no válido.");
@@ -290,6 +277,7 @@ public class MenuAdministrador {
 
                 } while (elec_Prod != 0);
 
+                //Luego se pide la direccion de entrega
                 MostarDireccionCliente(lista_Dir);
                 System.out.print("\nSelecione una Direccion a Entregar: ");
                 elec_Dir = sc.nextInt();
@@ -301,34 +289,44 @@ public class MenuAdministrador {
 
                 }
                 sc.nextLine();
-                
+                //Luego se guarda esa lista de productos_Pedidos dentro del objeto Pedido ya que un pedido tiene muchos productos
                 objPed.setObjProdPed(lista_ProdPed);
+                
+                //Se calcula el total dependiendo los productos elegidos
                 total = objLogPed.CalcularTotal(objPed);
 
-                //Insertar Pedido con Datos
+                //Y se guarda en cada atributo del obj Pedido el cliente, la direccion, el estado y el total 
                 objPed.setObjCliente(objCliente);
                 objPed.setObjDir(objDir);
                 objPed.setEstado(estado);
                 objPed.setTotal(total);
 
+                //Se llama a la funcion que se encarga de cordinar con la base de datos para insertar el pedido 
                 if(objLogPed.LogicaInsertarPedido(objPed)){
                     System.out.println("Pedido insertado con Exito!!");
                 }else{
                     System.out.println("No se pudo registrar el Pedido!!");
                 }
-                
+                //Una vez insertado lo extraemos nuevamente para saber su ID
                 Pedido ped = objLogPed.LogicaExtraerPedido(objCliente);
+                
+                // Con este obj con su ID procedemos a setearlo al objeto que teniamos antes
                 objPed.setCod_Pedido(ped.getCod_Pedido());
+                
+                //Y ese mismo objeto lo guardamos en el historial pedido ya que este contiene objeto de tipo pedido
                 objHistPed.setObjPedido(objPed);
 
+                //Se insertar en la base de datos y si todo sale bien se muestra el mensaje de exito
                 if(objLogPed.InsertarHistorial_Pedido(objHistPed)){
                     System.out.println("Historial_Pedido insertado con Exito!!");
                 }
 
+                //Aqui llenamos el atributo pedido de la clase Producto_Pedido para saber que poductos pertenecen a que pedido
                 for (Producto_Pedido prodPed : lista_ProdPed) {
                     prodPed.setObjPed(objPed);
                 }
 
+                //Una vez terminado el ciclo se inserta en la base de datos
                 if (objLogPed.LogicaInsertarProducto_Pedido(lista_ProdPed)) {
                     System.out.println("Producto_Pedido insertado con Exito");
                 } else {

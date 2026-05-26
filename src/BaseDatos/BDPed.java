@@ -22,7 +22,6 @@ public class BDPed {
     }
 
     public int InsertarPedido(Pedido objPed) throws ClassNotFoundException, SQLException {
-        // Consulta SQL parametrizada para evitar inyección SQL
         String Sentencia = "insert into Pedido (id_Cliente, estado, total, id_direccion_Entrega) "
                 + "values (?, ?, ?, ?)";
 
@@ -46,7 +45,6 @@ public class BDPed {
     }
 
     public int InsertarProducto_Pedido(Producto_Pedido objProdPed) throws ClassNotFoundException, SQLException {
-        // Consulta SQL parametrizada para evitar inyección SQL
         String Sentencia = "insert into Producto_Pedido (cod_Pedido, id_Producto, cantidad) "
                 + "values (?, ?, ?)";
 

@@ -25,18 +25,22 @@ public class MenuRepartidor {
 
             switch (eleccion) {
                 case 1:
+                    //Se Consultan los Pedidos que tengan en Estado adecuado para el Rol Repartidor
                     ArrayList<Pedido> list_Ped = objLogPed.ConsultarPedidosListos();
+
+                    //Se encarga de validar si existen pedidos 
                     if (!list_Ped.isEmpty()) {
                         MostrarPedidosListos(list_Ped);
-                    }else{
+                    } else {
                         System.out.println("No hay pedidos Disponibles!!");
                     }
                     break;
                 case 2:
+
                     list_Ped = objLogPed.ConsultarPedidosListos();
                     if (!list_Ped.isEmpty()) {
                         RegistrarEstadoPedido(list_Ped);
-                    }else{
+                    } else {
                         System.out.println("No hay pedidos Disponibles!!");
                     }
                     break;
@@ -64,32 +68,48 @@ public class MenuRepartidor {
         int elec_Ped;
         String opcion;
 
+        //Se muestran los pedidos con su estado
         MostrarPedidosListos(list_Ped);
         System.out.println("\nCAMBIO DE ESTADO");
         System.out.print("Seleccione el Pedido: ");
         elec_Ped = sc.nextInt();
         sc.nextLine();
 
+        //Se encuentra dentro de la lista de pedidos el objeto que el usuario eligio
         for (Pedido ped : list_Ped) {
+            //Se Comprueba si concuerda la eleccion dentro de la lista y ademas tambien el estado
             if (ped.getCod_Pedido() == elec_Ped && ped.getEstado().equalsIgnoreCase("Listo para Entrega")) {
+                //Se cambia el estado
                 ped.setEstado("En Camino");
+
+                //Se actualiza el estado en la base de datos
                 objLogPed.ActualizarEstadoPedido(ped);
+
+                //Y adicional se agrega el objeto con ese estado en concreto dentro de un atributo del objeto objHistPed
                 objHistPed.setObjPedido(ped);
+
+                //Y se Procede a insertar dentro de la base de datos ese objeto
                 objLogPed.InsertarHistorial_Pedido(objHistPed);
 
+                //Se comprueba si el usuario desea de una vez actualizar el estado de en camino a Listo para Entrega
                 System.out.print("Desea entregar el Pedido? (s/n): ");
                 opcion = sc.nextLine();
+                //Se valida la opcion elegida
                 if (opcion.equalsIgnoreCase("s")) {
+                    //Y en caso de cumplirse se procede a pedir el nombre de la persona que recibe el pedido junto con la fecha y hora de entrega
                     System.out.print("Ingrese el nombre de la persona que recibe el pedido: ");
                     ped.setReceptor(sc.nextLine());
                     ped.setFecha_Hora_Entrega(LocalDateTime.now());
                     ped.setEstado("Entregado");
+
+                    //Y finalmente se actualiza en la base de datos tanto el estado del pedido como el historial
                     objLogPed.ActualizarEstadoPedido(ped);
                     objHistPed.setObjPedido(ped);
                     objLogPed.InsertarHistorial_Pedido(objHistPed);
 
                 }
 
+                //Esto en caso de que el repartidor elija un pedido con el estado en Camino
             } else if (ped.getCod_Pedido() == elec_Ped && ped.getEstado().equalsIgnoreCase("En Camino")) {
                 System.out.print("Ingrese el nombre de la persona que recibe el pedido: ");
                 ped.setReceptor(sc.nextLine());

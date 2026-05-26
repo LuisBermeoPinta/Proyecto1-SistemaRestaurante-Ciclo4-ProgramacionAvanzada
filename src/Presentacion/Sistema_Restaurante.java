@@ -13,6 +13,7 @@ public class Sistema_Restaurante {
     LogProd objLogProd = new LogProd();
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        //Instancia que nos servira para iniciar el Programa
         Sistema_Restaurante app = new Sistema_Restaurante();
         app.MostrarMenuPrincipal();
 
@@ -26,6 +27,7 @@ public class Sistema_Restaurante {
             System.out.println("2) Rol de Cocinero");
             System.out.println("3) Rol de Repartidor");
             System.out.println("4) Rol de Cliente");
+            System.out.println("5) Rol de Abastecedor");
             System.out.println("0) Salir\n");
             System.out.print("Ingrese su Eleccion: ");
             eleccion = sc.nextByte();
@@ -49,6 +51,11 @@ public class Sistema_Restaurante {
                     menuCliente.MostrarMenuCliente();
                     break;
                     
+                case 5:
+                    MenuAbastecedor menuAbast = new MenuAbastecedor();
+                    menuAbast.MostrarMenuAbastecedor();
+                    break;
+                    
                 case 0:
                     System.out.println("Saliendo...");
                     break;
@@ -60,14 +67,5 @@ public class Sistema_Restaurante {
 
     }
       
-
-    /*public void RegistrarProductos(ArrayList<Producto> lista_Productos) throws ClassNotFoundException, SQLException {
-        if (objLogProd.InsertarLogicaProducto(lista_Productos)) {
-            System.out.println("Productos Ingresados con Exito!!");
-        } else {
-            System.out.println("Error no se pudieron ingresar los Productos");
-        }
-
-    }*/
 
 }

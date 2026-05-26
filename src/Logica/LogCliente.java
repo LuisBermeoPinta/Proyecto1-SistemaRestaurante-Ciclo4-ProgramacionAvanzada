@@ -68,27 +68,6 @@ public class LogCliente {
 
     }
 
-    /*public boolean InsertarLogicaPedido (Cliente objCliente, Empleado objEmpleado, ArrayList<Pedido> pedidos) throws ClassNotFoundException, SQLException{
-        ResultSet rsCliente = objBDCliente.ExtraerIdentificador(objCliente);
-        int id_Cliente = 0;
-        if(rsCliente.next()){
-            id_Cliente = rsCliente.getInt("id_Cliente");
-        }
-        
-        ResultSet rsEmpleado =  objBDEmpleado.ExtraerIdentificador(objEmpleado);
-        int id_Empleado = 0;
-        if(rsEmpleado.next()){
-            id_Empleado = rsEmpleado.getInt("id_Empleado");
-        }        
-        
-        if(objBDCliente.InsertarPedido(pedidos, id_Cliente, id_Empleado) == pedidos.size()){
-            return true;
-            
-        }
-        return false;
-        
-        
-    }*/
     public ArrayList<Cliente> ExtraerClientes() throws ClassNotFoundException, SQLException {
         ArrayList<Cliente> lista_Clientes = new ArrayList<>();
         ResultSet rs = objBDCliente.ExtraerClientes();
